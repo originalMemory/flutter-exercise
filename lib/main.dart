@@ -74,8 +74,7 @@ class TestPage extends StatelessWidget {
               Text('Kandersteg, Switzerland', style: TextStyle(color: Colors.grey[500]),)
             ],
           )),
-          Icon(Icons.star, color: Colors.red[500],),
-          Text('41'),
+          FavoriteWidget(),
         ],
       ),
     );
@@ -116,6 +115,50 @@ class TestPage extends StatelessWidget {
           textSection,
         ],
       ),
+    );
+  }
+}
+
+class FavoriteWidget extends StatefulWidget {
+
+  @override
+  State createState() => _FavoriteWidgetState();
+}
+
+class _FavoriteWidgetState extends State<FavoriteWidget> {
+  bool _isFavorited = true;
+  int _favoriteCount = 41;
+
+  void _toogleFavorite() {
+    setState(() {
+      if (_isFavorited) {
+        _isFavorited = false;
+        _favoriteCount -= 1;
+      } else {
+        _isFavorited = true;
+        _favoriteCount += 1;
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+            padding: EdgeInsets.all(0),
+            child: IconButton(
+                padding: EdgeInsets.all(0),
+                icon: (_isFavorited ? Icon(Icons.star) : Icon(Icons.star_border)),
+                onPressed: _toogleFavorite
+            ),
+        ),
+        SizedBox(
+          width: 18,
+          child: Container(child: Text("$_favoriteCount"),),
+        )
+      ],
     );
   }
 }
